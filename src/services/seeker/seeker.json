@@ -1,0 +1,12 @@
+[
+    {
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/seminar1-1",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar1",
+        "JUDUL": "SEMINAR PAGI TOWER"
+    },
+    {
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/seminar1-2",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar2",
+        "JUDUL": "SEMINAR SIANG TOWER"
+    }
+]
