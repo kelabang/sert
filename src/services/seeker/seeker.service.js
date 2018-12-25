@@ -1,5 +1,4 @@
 // Initializes the `Seeker` service on path `/seeker`
-
 const Request = require('request');
 const hooks = require('./seeker.hooks');
 const http = require('http');

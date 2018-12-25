@@ -10,6 +10,8 @@ const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 
+const redisClient = require('feathers-hooks-rediscache').redisClient;
+const routes = require('feathers-hooks-rediscache').cacheRoutes;
 
 const middleware = require('./middleware');
 const services = require('./services');
@@ -20,6 +22,8 @@ const app = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
+// Load redis client
+app.configure(redisClient);
 // Enable security, CORS, compression, favicon and body parsing
 app.use(helmet());
 app.use(cors());
@@ -29,6 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
+
+app.use('/cache', routes(app));
 
 // Set up Plugins and providers
 app.configure(express.rest());
