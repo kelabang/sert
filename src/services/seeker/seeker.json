@@ -8,5 +8,15 @@
         "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/seminar1-2",
         "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar2",
         "JUDUL": "SEMINAR SIANG TOWER"
+    },
+    {
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/seminar1-3",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar3",
+        "JUDUL": "SEMINAR PAGI REKTORAT"
+    },
+    {
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/seminar1-4",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar4",
+        "JUDUL": "SEMINAR SIANG REKTORAT"
     }
 ]
