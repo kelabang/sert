@@ -5,6 +5,7 @@ const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
 const { parse } = require('node-html-parser');
+const moment = require('moment');
 
 const config = require('./seeker.json');
 const { client_imgur, url_imgur} = require('./thirdparty.json');
@@ -137,7 +138,6 @@ const getImageSertifikat = function (name, kodecetak) {
   const P = new Promise((r) => R = r);
 
   /* cetak user e-sertifikat */
-  console.warn('pakai this ', this.URL_CETAK_SERTIFIKAT);
   const uri = (this.URL_CETAK_SERTIFIKAT)? this.URL_CETAK_SERTIFIKAT: URL_CETAK_SERTIFIKAT;
   console.warn(uri);
   const request = Request.defaults({encoding: null});
@@ -166,8 +166,45 @@ const getImageSertifikat = function (name, kodecetak) {
 };
 
 const generateGetImageSertifikat = (url) => {
-  console.warn('bind ', url);
   return getImageSertifikat.bind({URL_CETAK_SERTIFIKAT: url});
+};
+
+const constructTheOutput = (year, name, params) => {
+  return Promise.all(config.map(async ({ URL_CETAK_SERTIFIKAT, URL_SERTIFIKAT, JUDUL }) => {
+
+    URL_CETAK_SERTIFIKAT = URL_CETAK_SERTIFIKAT.replace('{{tahun}}', year);
+    URL_SERTIFIKAT = URL_SERTIFIKAT.replace('{{tahun}}', year);
+
+    const searchNameIfExist = generateSearchNameIfExist(URL_SERTIFIKAT);
+    const {
+      isExist,
+      name: _name,
+      kodecetak,
+    } = await searchNameIfExist(name);
+
+    if (!isExist)
+      return {
+        isExist,
+        params,
+        success: false
+      };
+
+    let output = null;
+
+    try {
+      const getImageSertifikat = generateGetImageSertifikat(URL_CETAK_SERTIFIKAT);
+      output = await getImageSertifikat(_name, kodecetak);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return {
+      isExist,
+      ...output,
+      judul: JUDUL
+    };
+
+  }));
 };
 
 class Seeker {
@@ -177,50 +214,48 @@ class Seeker {
 		
     let {
       query: {
-        name
+        name,
+        year
       }
     } = params;
 		
     name = name.toLocaleLowerCase();
 
-    const _output = Promise.all(config.map(async ({ URL_CETAK_SERTIFIKAT, URL_SERTIFIKAT, JUDUL }) => {
-      const searchNameIfExist = generateSearchNameIfExist(URL_SERTIFIKAT);
-      const {
-        isExist,
-        name: _name,
-        kodecetak,
-      } = await searchNameIfExist(name);
+    if(!year) 
+      year = moment().year();
 
-      if (!isExist)
-        return {
-          isExist,
-          params,
-          success: false
-        };
+    const _output = constructTheOutput(year, name, params);
 
-      let output = null;
+    let _output1 = [];
+    let yearMin1 = '';
 
-      try {
-        const getImageSertifikat = generateGetImageSertifikat(URL_CETAK_SERTIFIKAT);
-        output = await getImageSertifikat(_name, kodecetak);
-      } catch (error) {
-        console.error(error);
-      }
+    if(!params.year) {
+      yearMin1 = moment(year).subtract(1, 'years').year();
+      _output1 = constructTheOutput(yearMin1, name, params);
+    }
 
-      return {
-        isExist,
-        ...output,
-        judul: JUDUL
-      };
-
-    }));
-
-    return _output.then(data => {
+    return Promise.all([
+      _output,
+      _output1
+    ]).then(([_output, _output1]) => {
       return {
         message: 'response from server',
-        data
+        data: [
+          ..._output,
+          ..._output1
+        ]
       };
-    }); 
+    });
+
+    // return _output.then(data => {
+    //   return {
+    //     message: 'response from server',
+    //     data: [
+    //       ..._output,
+    //       ..._output1
+    //     ]
+    //   };
+    // }); 
 
   }
 }
