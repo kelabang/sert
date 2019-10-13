@@ -2,10 +2,10 @@
   "host": "0.0.0.0",
   "port": "PORT",
   "redis": {
-    "host": "redis-14240.c14.us-east-1-3.ec2.cloud.redislabs.com",
-    "port": 14240,
+    "host": "redis-15005.c16.us-east-1-3.ec2.cloud.redislabs.com",
+    "port": 15005,
     "no_ready_check": true,
-    "auth_pass": "q39Ut1t9NXP5q2dmc2Sjrvr40TQ4TUO2"
+    "auth_pass": "J9188pmwwWBtJaDdtlZscKXrt5B2GtB6"
   },
   "redisCache": {
     "defaultDuration": 3600,
