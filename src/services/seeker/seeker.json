@@ -1,22 +1,22 @@
 [
     {
-        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/seminar1-1",
-        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/cetak/cert_seminar1",
-        "JUDUL": "SEMINAR PAGI TOWER"
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/ppsifasilkom2019/ppsi2019",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/ppsifasilkom2019/cetak/cert_ppsi2019",
+        "JUDUL": "PAMERAN KARYA MAHASISWA"
     },
     {
-        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/seminar1-2",
-        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/cetak/cert_seminar2",
-        "JUDUL": "SEMINAR SIANG TOWER"
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/iot/machinelearning",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/iot/cetak/iotcert",
+        "JUDUL": "IOT"
     },
     {
-        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/seminar1-3",
-        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/cetak/cert_seminar3",
-        "JUDUL": "SEMINAR PAGI REKTORAT"
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/festivalkwh2019/kwhumb2019",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/festivalkwh2019/cetak/cert_kwhumb2019",
+        "JUDUL": "FESTIVAL KERIWAUSAHAAN UMB"
     },
     {
-        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/seminar1-4",
-        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/sn{{tahun}}/cetak/cert_seminar4",
-        "JUDUL": "SEMINAR SIANG REKTORAT"
+        "URL_SERTIFIKAT": "https://sertifikatfasilkom.web.id/2ppi2019/2penulisanilmiah2019",
+        "URL_CETAK_SERTIFIKAT": "https://sertifikatfasilkom.web.id/2ppi2019/cetak/cert_2ppi2019",
+        "JUDUL": "PELATIHAN PENULISAN ILMIAH"
     }
 ]
