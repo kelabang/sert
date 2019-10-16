@@ -8,10 +8,10 @@ const { parse } = require('node-html-parser');
 const moment = require('moment');
 
 const config = require('./seeker.json');
-const { client_imgur, url_imgur} = require('./thirdparty.json');
+const { client_imgur, url_imgur } = require('./thirdparty.json');
 
-const URL_SERTIFIKAT = 'https://sertifikatfasilkom.web.id/sn2018/seminar1-1';
-const URL_CETAK_SERTIFIKAT = 'https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar1';
+// const URL_SERTIFIKAT = 'https://sertifikatfasilkom.web.id/sn2018/seminar1-1';
+// const URL_CETAK_SERTIFIKAT = 'https://sertifikatfasilkom.web.id/sn2018/cetak/cert_seminar1';
 
 const searchNameIfExist = function (name_args) {
 
@@ -19,7 +19,7 @@ const searchNameIfExist = function (name_args) {
   const P = new Promise((r) => R = r);
 
   /* search user from e-sertifikat */
-  const url_esertifikat = (this.URL_SERTIFIKAT) ? this.URL_SERTIFIKAT:URL_SERTIFIKAT;
+  const url_esertifikat = (this.URL_SERTIFIKAT) ? this.URL_SERTIFIKAT : URL_SERTIFIKAT;
   const parsedUrl = url.parse(url_esertifikat, true);
   const postData = querystring.stringify({
     'id': name_args,
@@ -41,26 +41,26 @@ const searchNameIfExist = function (name_args) {
     res.on('end', () => {
       const bodyAlreadyLowercase = body.toLocaleLowerCase();
       const isExist = (new RegExp(name_args)).test(bodyAlreadyLowercase);
-			
+
       console.warn('name_args', name_args);
       console.warn('this.url', url_esertifikat);
-      console.warn('isExist', isExist);			
-			
+      console.warn('isExist', isExist);
+
       let name = '';
       let kodecetak = '';
-      if(isExist) {
+      if (isExist) {
         // convert string to dom
         const root = parse(body);
         // query dom and get the name
         const dom = root.querySelectorAll('input');
-        if(dom.length > 1) {
+        if (dom.length > 1) {
           dom.map(item => {
             const attr = item.attributes['name'];
-            if(attr == 'namacetak') {
-              name = item.attributes['value'];		
+            if (attr == 'namacetak') {
+              name = item.attributes['value'];
               return true;
             }
-            if(attr == 'kodecetak') {
+            if (attr == 'kodecetak') {
               kodecetak = item.attributes['value'];
               return true;
             }
@@ -84,10 +84,10 @@ const searchNameIfExist = function (name_args) {
 };
 
 const generateSearchNameIfExist = (url) => {
-  return searchNameIfExist.bind({URL_SERTIFIKAT: url});
+  return searchNameIfExist.bind({ URL_SERTIFIKAT: url });
 };
 
-const uploadImageToImgur = async ({base64, name}) => {
+const uploadImageToImgur = async ({ base64, name }) => {
 
   let R = null;
   const P = new Promise((r) => R = r);
@@ -100,12 +100,12 @@ const uploadImageToImgur = async ({base64, name}) => {
   };
 
   /* upload file to imgur */
-  const request = Request.defaults({encoding: 'utf8'});
+  const request = Request.defaults({ encoding: 'utf8' });
   request.post({
     url: uri,
     formData: formData,
     headers: {
-      'Authorization': 'Client-ID '+ clientid
+      'Authorization': 'Client-ID ' + clientid
     }
   }, (err, response, body) => {
     if (err) {
@@ -138,9 +138,9 @@ const getImageSertifikat = function (name, kodecetak) {
   const P = new Promise((r) => R = r);
 
   /* cetak user e-sertifikat */
-  const uri = (this.URL_CETAK_SERTIFIKAT)? this.URL_CETAK_SERTIFIKAT: URL_CETAK_SERTIFIKAT;
+  const uri = (this.URL_CETAK_SERTIFIKAT) ? this.URL_CETAK_SERTIFIKAT : URL_CETAK_SERTIFIKAT;
   console.warn(uri);
-  const request = Request.defaults({encoding: null});
+  const request = Request.defaults({ encoding: null });
   request.post({
     url: uri,
     form: {
@@ -160,13 +160,13 @@ const getImageSertifikat = function (name, kodecetak) {
       });
     }
   });
-	
+
   return P;
-	
+
 };
 
 const generateGetImageSertifikat = (url) => {
-  return getImageSertifikat.bind({URL_CETAK_SERTIFIKAT: url});
+  return getImageSertifikat.bind({ URL_CETAK_SERTIFIKAT: url });
 };
 
 const constructTheOutput = (year, name, params) => {
@@ -211,17 +211,17 @@ class Seeker {
   async find(params) {
 
     // Return an object in the form of { name, text }
-		
+
     let {
       query: {
         name,
         year
       }
     } = params;
-		
+
     name = name.toLocaleLowerCase();
 
-    if(!year) 
+    if (!year)
       year = moment().year();
 
     const _output = constructTheOutput(year, name, params);
@@ -229,20 +229,23 @@ class Seeker {
     let _output1 = [];
     let yearMin1 = '';
 
-    if(!params.year) {
+    if (!params.year) {
       yearMin1 = moment(year).subtract(1, 'years').year();
-      _output1 = constructTheOutput(yearMin1, name, params);
+      // _output1 = constructTheOutput(yearMin1, name, params);
     }
 
     return Promise.all([
       _output,
-      _output1
-    ]).then(([_output, _output1]) => {
+      // _output1
+    ]).then(([
+      _output,
+      // _output1
+    ]) => {
       return {
         message: 'response from server',
         data: [
           ..._output,
-          ..._output1
+          // ..._output1
         ]
       };
     });
